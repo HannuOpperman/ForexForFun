@@ -1,0 +1,35 @@
+<h4>ForexForFun</h4>
+
+<!-- Date -->
+<p>Date: <input  [(ngModel)]="selectedDate" type="date" [max]="today" [value]="selectedDate" /></p>
+
+<!-- Amount -->
+<p>Amount: <input [(ngModel)]="selectedAmount"/></p>
+
+<!-- Main Currency Select-->
+<div *ngIf="sorted">
+    <p>Select main currency</p>
+    <select [(ngModel)]="selectedSymbol">
+        <option [value]="symbolItem.symbol" *ngFor="let symbolItem of symbolList">
+            {{symbolItem.symbol + ' - ' + symbolItem.name}}
+        </option>
+    </select>
+</div>
+
+<!-- Secondary Currency Select-->
+<div *ngIf="sorted && selectedSymbol">
+    <p>Select secondary currency</p>
+    <select [(ngModel)]="selectedExchange">
+        <option
+            [value]="exchange.secondaryCurrency.ShortName"
+            *ngFor="let exchange of sortedResponseList[selectedSymbol]">
+            {{exchange.secondaryCurrency.ShortName}} - {{exchange.secondaryCurrency.Name}}
+        </option>
+    </select>
+</div>
+
+<!-- Convert & Output-->
+<div *ngIf="selectedSymbol && selectedExchange">
+    <p><button (click)="checkExchange()">Convert</button></p>
+    <p>{{output}}</p>
+</div>
